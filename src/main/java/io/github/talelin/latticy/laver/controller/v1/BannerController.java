@@ -2,18 +2,19 @@ package io.github.talelin.latticy.laver.controller.v1;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.latticy.common.mybatis.Page;
+import io.github.talelin.latticy.laver.dto.BannerDTO;
 import io.github.talelin.latticy.laver.model.Banner;
 import io.github.talelin.latticy.laver.service.BannerService;
+import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
+import io.github.talelin.latticy.vo.UpdatedVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/v1/banner")
@@ -34,6 +35,21 @@ public class BannerController {
         Page<Banner> pager = new Page<>(page, count);
         IPage<Banner> paging = bannerService.getBaseMapper().selectPage(pager, null);
         return new PageResponseVO<>(paging.getTotal(), paging.getRecords(), paging.getCurrent(), paging.getSize());
+    }
+
+    @PutMapping("/{id}")
+    public UpdatedVO update(
+            @RequestBody @Validated BannerDTO bannerDTO,
+            @PathVariable @Positive Long id) {
+        bannerService.update(bannerDTO, id);
+        return new UpdatedVO<>();
+    }
+
+    @DeleteMapping("/{id}")
+    public DeletedVO delete(
+            @PathVariable @Positive Long id) {
+        bannerService.delete(id);
+        return new DeletedVO<>();
     }
 
 }
