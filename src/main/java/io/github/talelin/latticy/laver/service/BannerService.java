@@ -1,5 +1,6 @@
 package io.github.talelin.latticy.laver.service;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.talelin.latticy.laver.mapper.BannerMapper;
 import io.github.talelin.latticy.laver.model.Banner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BannerService {
+public class BannerService extends ServiceImpl<BannerMapper, Banner> {
 
     @Autowired
     BannerMapper bannerMapper;

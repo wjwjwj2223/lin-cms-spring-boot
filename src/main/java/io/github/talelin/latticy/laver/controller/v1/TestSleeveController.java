@@ -21,12 +21,6 @@ public class TestSleeveController {
         return banners;
     }
 
-    @GetMapping("/test3")
-    public List<Banner> getBanners1() {
-        List<Banner> banners = bannerService.getBanners1();
-        return banners;
-    }
-
     @GetMapping("/test2")
     public long insert() {
         Banner banner = new Banner();
@@ -36,5 +30,10 @@ public class TestSleeveController {
         return banner.getId();
     }
 
+    @GetMapping("/test3")
+    public List<Banner> getBanners1() {
+        List<Banner> banners = bannerService.getBanners1();
+        return banners;
+    }
 
 }
