@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.laver.controller.v1;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.github.talelin.core.annotation.*;
 import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.laver.bo.BannerWithItemsBO;
 import io.github.talelin.latticy.laver.dto.BannerDTO;
@@ -10,6 +11,7 @@ import io.github.talelin.latticy.vo.CreatedVO;
 import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
 import io.github.talelin.latticy.vo.UpdatedVO;
+import lombok.extern.java.Log;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -22,12 +24,20 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/v1/banner")
 @Validated
+@PermissionModule(value = "Banner")
 public class BannerController {
 
     @Autowired
     BannerService bannerService;
 
+//    @LoginRequired //需要登录 不管在什么分组
+//    @AdminRequired //需要root账户权限
+//    @GroupRequired //
+//    @PermissionMeta
+//    @PermissionModule
+
     @GetMapping("/page")
+    @LoginRequired
     public PageResponseVO<BannerDO> getBanners(
             @RequestParam(required = false, defaultValue = "0")
             @Min(value = 0) Integer page,
@@ -41,11 +51,14 @@ public class BannerController {
     }
 
     @GetMapping("/{id}")
+    @LoginRequired
     public BannerWithItemsBO getWithItems(@PathVariable @Positive Long id) {
         return bannerService.getWithItems(id);
     }
 
     @PutMapping("/{id}")
+    @PermissionMeta(value = "更新Banner")
+    @GroupRequired
     public UpdatedVO update(
             @RequestBody @Validated BannerDTO bannerDTO,
             @PathVariable @Positive Long id) {
@@ -54,13 +67,17 @@ public class BannerController {
     }
 
     @DeleteMapping("/{id}")
+    @PermissionMeta(value = "删除Banner")
+    @GroupRequired
     public DeletedVO delete(
             @PathVariable @Positive Long id) {
         bannerService.delete(id);
         return new DeletedVO<>();
     }
-    
+
     @PostMapping
+    @PermissionMeta(value = "创建Banner")
+    @GroupRequired
     public CreatedVO create(@RequestBody @Validated BannerDTO bannerDTO) {
         BannerDO bannerDO = new BannerDO();
         BeanUtils.copyProperties(bannerDTO, bannerDO);
