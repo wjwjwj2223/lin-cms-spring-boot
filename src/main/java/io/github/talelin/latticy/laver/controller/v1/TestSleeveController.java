@@ -1,5 +1,5 @@
 package io.github.talelin.latticy.laver.controller.v1;
-import io.github.talelin.latticy.laver.model.Banner;
+import io.github.talelin.latticy.laver.model.BannerDO;
 import io.github.talelin.latticy.laver.service.BannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,24 +16,24 @@ public class TestSleeveController {
     BannerService bannerService;
 
     @GetMapping("/test1")
-    public List<Banner> getBanners() {
-        List<Banner> banners = bannerService.getBanners();
-        return banners;
+    public List<BannerDO> getBanners() {
+        List<BannerDO> bannerDOS = bannerService.getBanners();
+        return bannerDOS;
     }
 
     @GetMapping("/test2")
     public long insert() {
-        Banner banner = new Banner();
-        banner.setName("测试名字");
-        banner.setTitle("测试title");
-        bannerService.insertBanner(banner);
-        return banner.getId();
+        BannerDO bannerDO = new BannerDO();
+        bannerDO.setName("测试名字");
+        bannerDO.setTitle("测试title");
+        bannerService.insertBanner(bannerDO);
+        return bannerDO.getId();
     }
 
     @GetMapping("/test3")
-    public List<Banner> getBanners1() {
-        List<Banner> banners = bannerService.getBanners1();
-        return banners;
+    public List<BannerDO> getBanners1() {
+        List<BannerDO> bannerDOS = bannerService.getBanners1();
+        return bannerDOS;
     }
 
 }

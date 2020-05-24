@@ -3,7 +3,7 @@ package io.github.talelin.latticy.laver.controller.v1;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.laver.dto.BannerDTO;
-import io.github.talelin.latticy.laver.model.Banner;
+import io.github.talelin.latticy.laver.model.BannerDO;
 import io.github.talelin.latticy.laver.service.BannerService;
 import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
@@ -25,16 +25,21 @@ public class BannerController {
     BannerService bannerService;
 
     @GetMapping("/page")
-    public PageResponseVO<Banner> getBanners(
+    public PageResponseVO<BannerDO> getBanners(
             @RequestParam(required = false, defaultValue = "0")
             @Min(value = 0) Integer page,
             @RequestParam(required = false, defaultValue = "10")
             @Min(value = 1, message = "{page.count.min}")
             @Max(value = 30, message = "{page.count.max}")
             Integer count) {
-        Page<Banner> pager = new Page<>(page, count);
-        IPage<Banner> paging = bannerService.getBaseMapper().selectPage(pager, null);
+        Page<BannerDO> pager = new Page<>(page, count);
+        IPage<BannerDO> paging = bannerService.getBaseMapper().selectPage(pager, null);
         return new PageResponseVO<>(paging.getTotal(), paging.getRecords(), paging.getCurrent(), paging.getSize());
+    }
+
+    @GetMapping("/{id}")
+    public  void getWithItems(@PathVariable @Positive Long id) {
+
     }
 
     @PutMapping("/{id}")
