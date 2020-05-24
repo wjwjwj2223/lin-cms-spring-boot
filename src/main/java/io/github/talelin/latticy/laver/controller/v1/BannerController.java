@@ -38,8 +38,8 @@ public class BannerController {
     }
 
     @GetMapping("/{id}")
-    public  void getWithItems(@PathVariable @Positive Long id) {
-
+    public BannerWithItemsBO getWithItems(@PathVariable @Positive Long id) {
+        return bannerService.getWithItems(id);
     }
 
     @PutMapping("/{id}")
