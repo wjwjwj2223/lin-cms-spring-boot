@@ -1,6 +1,7 @@
 package io.github.talelin.latticy.laver.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.github.talelin.autoconfigure.exception.NotFoundException;
 import io.github.talelin.latticy.laver.bo.BannerWithItemsBO;
@@ -46,8 +47,14 @@ public class BannerService extends ServiceImpl<BannerMapper, BannerDO> {
         if (bannerDO == null) {
             throw new NotFoundException(20000);
         }
+//        List<BannerItemDO> bannerItemDOS = new LambdaQueryChainWrapper<>(bannerItemMapper)
+//                .eq(BannerItemDO::getBannerId, id)
+//                .list();
+//        return new BannerWithItemsBO(bannerDO, bannerItemDOS);
+
         QueryWrapper<BannerItemDO> wrapper = new QueryWrapper();
-        wrapper.eq("banner_id", id);
+//        wrapper.eq("banner_id", id);
+        wrapper.lambda().eq(BannerItemDO::getBannerId, id);
         List<BannerItemDO> bannerItemDOS = bannerItemMapper.selectList(wrapper);
         return new BannerWithItemsBO(bannerDO, bannerItemDOS);
     }
