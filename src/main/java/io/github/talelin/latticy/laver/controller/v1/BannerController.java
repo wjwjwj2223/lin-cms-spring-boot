@@ -6,9 +6,11 @@ import io.github.talelin.latticy.laver.bo.BannerWithItemsBO;
 import io.github.talelin.latticy.laver.dto.BannerDTO;
 import io.github.talelin.latticy.laver.model.BannerDO;
 import io.github.talelin.latticy.laver.service.BannerService;
+import io.github.talelin.latticy.vo.CreatedVO;
 import io.github.talelin.latticy.vo.DeletedVO;
 import io.github.talelin.latticy.vo.PageResponseVO;
 import io.github.talelin.latticy.vo.UpdatedVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +58,14 @@ public class BannerController {
             @PathVariable @Positive Long id) {
         bannerService.delete(id);
         return new DeletedVO<>();
+    }
+    
+    @PostMapping
+    public CreatedVO create(@RequestBody @Validated BannerDTO bannerDTO) {
+        BannerDO bannerDO = new BannerDO();
+        BeanUtils.copyProperties(bannerDTO, bannerDO);
+        this.bannerService.save(bannerDO);
+        return new CreatedVO();
     }
 
 }
