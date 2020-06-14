@@ -13,7 +13,5 @@ import io.github.talelin.latticy.laver.model.SpuDetailDO;
  * @since 2020-05-31
  */
 public interface SpuMapper extends BaseMapper<SpuDO> {
-
     SpuDetailDO getDetail(Long id);
-
 }
