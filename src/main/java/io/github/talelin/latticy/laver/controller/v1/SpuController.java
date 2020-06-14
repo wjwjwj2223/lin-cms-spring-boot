@@ -4,17 +4,12 @@ package io.github.talelin.latticy.laver.controller.v1;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.common.util.PageUtil;
+import io.github.talelin.latticy.laver.dto.SpuDTO;
 import io.github.talelin.latticy.laver.model.SpuDetailDO;
 import io.github.talelin.latticy.laver.service.impl.SpuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import io.github.talelin.latticy.laver.model.SpuDO;
 import io.github.talelin.latticy.vo.CreatedVO;
 import io.github.talelin.latticy.vo.DeletedVO;
@@ -24,8 +19,6 @@ import io.github.talelin.latticy.vo.UpdatedVO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Positive;
-
-import org.springframework.web.bind.annotation.RestController;
 
 /**
 * @author generator@Wangjie
@@ -40,7 +33,8 @@ public class SpuController {
     private SpuService spuService;
 
     @PostMapping("")
-    public CreatedVO create() {
+    public CreatedVO create(@RequestBody @Validated SpuDTO dto) {
+        this.spuService.create(dto);
         return new CreatedVO();
     }
 
