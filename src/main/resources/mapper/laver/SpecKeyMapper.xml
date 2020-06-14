@@ -18,10 +18,12 @@
 --      2张表 spu_key, spec_key
 --      select sk1.* from spec_key sk1 join spu_key sk2 on sk1.id = sk2.spec_key_id
 --      where sk2.spu_id = 2
+--      2张表 spu_key, spec_key
         SELECT sk2.*
         FROM spu_key sk
-        JOIN spec_key sk2 ON sk.spec_key_id = sk2.id
-        WHERE sk.spu_id = 2
+                 JOIN spec_key sk2 ON sk.spec_key_id = sk2.id
+        WHERE sk.spu_id = #{spuId} AND sk2.delete_time is NULL
+
     </select>
 
 </mapper>
