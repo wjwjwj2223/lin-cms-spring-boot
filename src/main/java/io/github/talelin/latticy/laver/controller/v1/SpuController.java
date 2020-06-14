@@ -6,7 +6,7 @@ import io.github.talelin.latticy.common.mybatis.Page;
 import io.github.talelin.latticy.common.util.PageUtil;
 import io.github.talelin.latticy.laver.dto.SpuDTO;
 import io.github.talelin.latticy.laver.model.SpuDetailDO;
-import io.github.talelin.latticy.laver.service.impl.SpuService;
+import io.github.talelin.latticy.laver.service.SpuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
