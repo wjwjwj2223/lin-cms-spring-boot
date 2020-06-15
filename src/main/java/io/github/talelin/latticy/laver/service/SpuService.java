@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,7 @@ public class SpuService extends ServiceImpl<SpuMapper, SpuDO> {
         return this.getBaseMapper().getDetail(id);
     }
 
+    @Transactional
     public void create(SpuDTO dto) {
         SpuDO spuDO = new SpuDO();
         BeanUtils.copyProperties(dto, spuDO);
